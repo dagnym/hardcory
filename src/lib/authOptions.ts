@@ -1,7 +1,7 @@
 import BattleNetProvider from "next-auth/providers/battlenet";
 import { JWT } from "next-auth/jwt";
 import { Account, Session } from "next-auth";
-import { secret } from "@aws-amplify/backend";
+
 interface CustomJWT extends JWT {
   accessToken?: string;
 }
