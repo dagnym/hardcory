@@ -1,8 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useSession, signOut } from "next-auth/react";
 
 const LoginButton = () => {
+  const { status } = useSession();
   const router = useRouter();
 
   const handleLogin = () => {
@@ -13,18 +15,22 @@ const LoginButton = () => {
     // Construct the Blizzard authorization URL
     const authorizationUrl = `https://oauth.battle.net/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(
       redirectUri
-    )}&response_type=code&scope=${encodeURIComponent(scope)}&state=true`;
+    )}&response_type=code&scope=${encodeURIComponent(scope)}&state=undefined`;
 
     // Redirect user to Blizzard's authorization page
     router.push(authorizationUrl);
   };
 
+  const handleLogout = () => {
+    signOut({ callbackUrl: "/" });
+  };
+
   return (
     <button
       className="border py-1 px-2 rounded-sm hover:bg-blue-500 hover:border-blue-300 hover:text-black"
-      onClick={handleLogin}
+      onClick={status !== "authenticated" ? handleLogin : handleLogout}
     >
-      Login with Battle.net
+      {status !== "authenticated" ? "Login with Battle.net" : "Log out"}
     </button>
   );
 };

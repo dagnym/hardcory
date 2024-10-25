@@ -14,14 +14,29 @@ export default function Home() {
   useEffect(() => {
     console.log("status: ", status);
     console.log("session data: ", session);
+
+    const fetchUserData = async () => {
+      const userData = await fetch("/api/user-data");
+      const userInfo = await userData.json();
+      console.log("user data: ", userInfo);
+    };
+    if (status === "authenticated") {
+      fetchUserData();
+    }
   }, [status, session]);
   // return (
   //   <Authenticator>
   //     {({ signOut, user }) => {
+
   return (
-    <div className="relative">
-      <div className="flex justify-around pt-5">
+    <div className="relative h-screen p-6">
+      <div id="nav" className="flex justify-around pb-4">
         <LoginButton />
+        {status === "authenticated" && (
+          <h2 className="text-xl self-center text-blue-400">
+            Welcome {session.user!.name}!
+          </h2>
+        )}
         <button
           onClick={() => router.push("/characters")}
           className="border py-1 px-2 rounded-sm hover:bg-white hover:text-black"
@@ -29,6 +44,10 @@ export default function Home() {
           Characters
         </button>
       </div>
+      <div className="w-full border"></div>
+      {status === "loading" || status === "unauthenticated" ? (
+        <div>Loading...</div>
+      ) : null}
     </div>
   );
   //     }}

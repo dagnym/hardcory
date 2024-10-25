@@ -14,7 +14,7 @@ export async function GET() {
   );
   if (!response.ok) {
     console.error(`Failed to fetch response:`, response.statusText);
-    return { data: null };
+    return NextResponse.json({ data: null });
   }
   const data = await response.json();
 
