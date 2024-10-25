@@ -11,7 +11,7 @@ export const authOptions = {
   providers: [
     BattleNetProvider({
       clientId: process.env.NEXT_PUBLIC_BNET_CLIENT_ID as string,
-      clientSecret: secret("NEXTAUTH_SECRET").toString(),
+      clientSecret: process.env.NEXTAUTH_SECRET as string,
       issuer: "https://us.battle.net/oauth",
     }),
     // ...add more providers here
