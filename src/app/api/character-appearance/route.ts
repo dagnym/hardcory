@@ -1,8 +1,8 @@
-import { NextResponse, NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
 export async function GET() {
   const accessToken = process.env.BLIZZARD_ACCESS_TOKEN;
-  const characters = ["smallcrotch", "berominhc", "blembogue", "globsonhc"];
+  // const characters = ["smallcrotch", "berominhc", "blembogue", "globsonhc"];
   const requestDomain =
     "https://us.api.blizzard.com/profile/wow/character/defias-pillager/smallcrotch/appearance?namespace=profile-classic1x-us&locale=en_US";
   try {

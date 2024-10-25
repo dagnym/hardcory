@@ -1,7 +1,7 @@
 "use client";
-import CharacterInfo from "@/components/CharacterInfo";
+
 import LoginButton from "@/components/LoginButton";
-import { Authenticator } from "@aws-amplify/ui-react";
+
 import { useRouter } from "next/navigation";
 import "@aws-amplify/ui-react/styles.css";
 

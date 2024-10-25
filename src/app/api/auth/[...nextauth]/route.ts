@@ -1,8 +1,12 @@
 import NextAuth from "next-auth";
 import BattleNetProvider from "next-auth/providers/battlenet";
-import { defineAuth, secret } from "@aws-amplify/backend";
+import { JWT } from "next-auth/jwt";
+import { Account, Session } from "next-auth";
 
-export const authOptions = {
+interface CustomJWT extends JWT {
+  accessToken?: string;
+}
+const authOptions = {
   // Configure one or more authentication providers
   providers: [
     BattleNetProvider({
@@ -14,14 +18,20 @@ export const authOptions = {
   ],
   debug: true,
   callbacks: {
-    async jwt({ token, account }: any) {
+    async jwt({
+      token,
+      account,
+    }: {
+      token: CustomJWT;
+      account?: Account | null;
+    }) {
       // When user signs in, add accessToken to the token object
       if (account) {
         token.accessToken = account.access_token;
       }
       return token;
     },
-    async session({ session, token }: any) {
+    async session({ session, token }: { session: Session; token: CustomJWT }) {
       // Pass accessToken to the session object
       session.accessToken = token.accessToken;
       return session;

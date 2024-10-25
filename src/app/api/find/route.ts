@@ -1,7 +1,7 @@
 // app/api/find-defias/route.js
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   const accessToken = process.env.BLIZZARD_ACCESS_TOKEN;
 
   const response = await fetch(

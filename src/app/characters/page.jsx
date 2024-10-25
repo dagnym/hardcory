@@ -12,7 +12,7 @@ export default function CharacterInfo() {
   const [characterStats, setCharacterStats] = useState([]);
   const [characterProfile, setCharacterProfile] = useState(null);
   const [characterMedia, setCharacterMedia] = useState(null);
-  const [error, setError] = useState(null);
+  // const [error, setError] = useState(null);
   const router = useRouter();
 
   const [loading, setLoading] = useState(true);
@@ -32,8 +32,6 @@ export default function CharacterInfo() {
         setCharacterStats(characterStatsArray);
         setCharacterProfile(characterProfileArray);
         setCharacterMedia(characterMediaArray);
-
-        const userData = await fetch("");
       } catch (err) {
         console.log(err);
       } finally {
@@ -68,7 +66,6 @@ export default function CharacterInfo() {
     // fetchCharacterAppearance();
   }, []);
 
-  if (error) return <div>Error: {error}</div>;
   if (loading) return <div>Loading...</div>;
   if (!loading) {
     return (
@@ -96,7 +93,7 @@ export default function CharacterInfo() {
                   height={100}
                   alt="uhh"
                   src={media.data.assets[0].value}
-                  className="self-center bg-red-500 border border-gray-300 rounded-sm mb-4"
+                  className="self-center bg-red-500 border border-gray-300 rounded-sm mb-4 "
                 />
                 <h1 className="text-orange-400 self-center text-lg">
                   {character.character.toString().toUpperCase()}

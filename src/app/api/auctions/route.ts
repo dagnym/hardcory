@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export async function GET() {
   const accessToken = process.env.BLIZZARD_ACCESS_TOKEN;

@@ -1,10 +1,8 @@
 // app/api/character/route.js
 
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-import { secret } from "@aws-amplify/backend";
-
-export async function GET(request: NextRequest) {
+export async function GET() {
   const characters = [
     "johnglobson",
     "blembogue",
@@ -23,7 +21,8 @@ export async function GET(request: NextRequest) {
     try {
       const response = await fetch(requestDomain, {
         headers: {
-          Authorization: `Bearer ${secret("BLIZZARD_ACCESS_TOKEN")}`,
+          Authorization: `Bearer ${accessToken}`,
+          // Authorization: `Bearer ${secret("BLIZZARD_ACCESS_TOKEN")}`,
         },
       });
       const data = await response.json();
@@ -39,11 +38,12 @@ export async function GET(request: NextRequest) {
     try {
       const response = await fetch(requestDomain, {
         headers: {
-          Authorization: `Bearer ${secret("BLIZZARD_ACCESS_TOKEN")}`,
+          Authorization: `Bearer ${accessToken}`,
+          // Authorization: `Bearer ${secret("BLIZZARD_ACCESS_TOKEN")}`,
         },
       });
       const data = await response.json();
-      console.log("character stats data: ", data);
+
       return { character, data };
     } catch (err) {
       console.log(err);
@@ -56,11 +56,12 @@ export async function GET(request: NextRequest) {
     try {
       const response = await fetch(requestDomain, {
         headers: {
-          Authorization: `Bearer ${secret("BLIZZARD_ACCESS_TOKEN")}`,
+          Authorization: `Bearer ${accessToken}`,
+          // Authorization: `Bearer ${secret("BLIZZARD_ACCESS_TOKEN")}`,
         },
       });
       const data = await response.json();
-      console.log("character profile data: ", data);
+
       return { character, data };
     } catch (err) {
       console.log(err);
@@ -73,7 +74,8 @@ export async function GET(request: NextRequest) {
     try {
       const response = await fetch(requestDomain, {
         headers: {
-          Authorization: `Bearer ${secret("BLIZZARD_ACCESS_TOKEN")}`,
+          Authorization: `Bearer ${accessToken}`,
+          // Authorization: `Bearer ${secret("BLIZZARD_ACCESS_TOKEN")}`,
         },
       });
       const data = await response.json();

@@ -1,4 +1,4 @@
-export async function GET(request) {
+export async function GET() {
   const accessToken = process.env.BLIZZARD_ACCESS_TOKEN;
 
   // Example URL from the href you mentioned
