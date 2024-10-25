@@ -1,25 +1,31 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useSession, signOut } from "next-auth/react";
+import { useSession, signOut, signIn } from "next-auth/react";
 
 const LoginButton = () => {
   const { status } = useSession();
-  const router = useRouter();
 
-  const handleLogin = () => {
-    const clientId = process.env.NEXT_PUBLIC_BNET_CLIENT_ID;
-    const redirectUri = process.env.NEXT_PUBLIC_REDIRECT_URI; // Change to your app's URL
-    const scope = "openid wow.profile";
-
-    // Construct the Blizzard authorization URL
-    const authorizationUrl = `https://oauth.battle.net/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(
-      redirectUri as string
-    )}&response_type=code&scope=${encodeURIComponent(scope)}&state=undefined`;
-
-    // Redirect user to Blizzard's authorization page
-    router.push(authorizationUrl);
+  const handleLogin = async () => {
+    try {
+      const chicken = await signIn("battlenet");
+      console.log("login: ", chicken);
+    } catch (err) {
+      console.log("error on login: ", err);
+    }
   };
+  // const handleLogin = () => {
+  //   const clientId = process.env.NEXT_PUBLIC_BNET_CLIENT_ID;
+  //   const redirectUri = process.env.NEXT_PUBLIC_REDIRECT_URI; // Change to your app's URL
+  //   const scope = "openid wow.profile";
+
+  //   // Construct the Blizzard authorization URL
+  //   const authorizationUrl = `https://oauth.battle.net/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(
+  //     redirectUri as string
+  //   )}&response_type=code&scope=${encodeURIComponent(scope)}&state=test`;
+
+  //   // Redirect user to Blizzard's authorization page
+  //   router.push(authorizationUrl);
+  // };
 
   const handleLogout = () => {
     signOut({ callbackUrl: "/" });

@@ -11,11 +11,17 @@ export const authOptions = {
   providers: [
     BattleNetProvider({
       clientId: process.env.NEXT_PUBLIC_BNET_CLIENT_ID as string,
-      clientSecret: process.env.NEXTAUTH_SECRET as string,
+      clientSecret: process.env.NEXT_BNET_CLIENT_SECRET as string,
       issuer: "https://us.battle.net/oauth",
+      authorization:
+        "https://oauth.battle.net/authorize?scope=openid%20wow.profile",
+
+      token: "https://oauth.battle.net/token",
+      // token: "https://oauth.battle.net/token",
     }),
     // ...add more providers here
   ],
+
   debug: true,
   callbacks: {
     async jwt({
