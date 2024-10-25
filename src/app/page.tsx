@@ -1,7 +1,37 @@
+"use client";
+import CharacterInfo from "@/components/CharacterInfo";
+import LoginButton from "@/components/LoginButton";
+import { Authenticator } from "@aws-amplify/ui-react";
+import { useRouter } from "next/navigation";
+import "@aws-amplify/ui-react/styles.css";
+
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 export default function Home() {
+  const { data: session, status } = useSession();
+
+  const router = useRouter();
+  useEffect(() => {
+    console.log("status: ", status);
+    console.log("session data: ", session);
+  }, [status, session]);
+  // return (
+  //   <Authenticator>
+  //     {({ signOut, user }) => {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <h2>HARDBOARD</h2>
+    <div className="relative">
+      <div className="flex justify-around pt-5">
+        <LoginButton />
+        <button
+          onClick={() => router.push("/characters")}
+          className="border py-1 px-2 rounded-sm hover:bg-white hover:text-black"
+        >
+          Characters
+        </button>
+      </div>
     </div>
   );
+  //     }}
+  //   </Authenticator>
+  // );
 }

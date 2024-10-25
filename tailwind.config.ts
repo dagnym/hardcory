@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        darkshire: "url('/images/darkshire.jpg')",
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
