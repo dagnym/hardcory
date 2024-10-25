@@ -11,6 +11,10 @@ export async function GET() {
         Authorization: `Bearer ${accessToken}`,
       },
     });
+    if (!response.ok) {
+      console.error(`Failed to fetch response:`, response.statusText);
+      return { data: null };
+    }
     const data = await response.json();
     return NextResponse.json(data);
   } catch (err) {

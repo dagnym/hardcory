@@ -1,6 +1,7 @@
 // app/api/character/route.js
 
 import { NextResponse } from "next/server";
+import { secret } from "@aws-amplify/backend";
 
 export async function GET() {
   const characters = [
@@ -21,10 +22,17 @@ export async function GET() {
     try {
       const response = await fetch(requestDomain, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
-          // Authorization: `Bearer ${secret("BLIZZARD_ACCESS_TOKEN")}`,
+          // Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${secret("BLIZZARD_ACCESS_TOKEN")}`,
         },
       });
+      if (!response.ok) {
+        console.error(
+          `Failed to fetch equipment for ${character}:`,
+          response.statusText
+        );
+        return { character, data: null };
+      }
       const data = await response.json();
       return { character, data };
     } catch (err) {
@@ -38,10 +46,17 @@ export async function GET() {
     try {
       const response = await fetch(requestDomain, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
-          // Authorization: `Bearer ${secret("BLIZZARD_ACCESS_TOKEN")}`,
+          // Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${secret("BLIZZARD_ACCESS_TOKEN")}`,
         },
       });
+      if (!response.ok) {
+        console.error(
+          `Failed to fetch equipment for ${character}:`,
+          response.statusText
+        );
+        return { character, data: null };
+      }
       const data = await response.json();
 
       return { character, data };
@@ -56,10 +71,17 @@ export async function GET() {
     try {
       const response = await fetch(requestDomain, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
-          // Authorization: `Bearer ${secret("BLIZZARD_ACCESS_TOKEN")}`,
+          // Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${secret("BLIZZARD_ACCESS_TOKEN")}`,
         },
       });
+      if (!response.ok) {
+        console.error(
+          `Failed to fetch equipment for ${character}:`,
+          response.statusText
+        );
+        return { character, data: null };
+      }
       const data = await response.json();
 
       return { character, data };
@@ -74,10 +96,17 @@ export async function GET() {
     try {
       const response = await fetch(requestDomain, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
-          // Authorization: `Bearer ${secret("BLIZZARD_ACCESS_TOKEN")}`,
+          // Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${secret("BLIZZARD_ACCESS_TOKEN")}`,
         },
       });
+      if (!response.ok) {
+        console.error(
+          `Failed to fetch equipment for ${character}:`,
+          response.statusText
+        );
+        return { character, data: null };
+      }
       const data = await response.json();
       return { character, data };
     } catch (err) {
@@ -89,21 +118,27 @@ export async function GET() {
     const characterEquipmentPromises = characters.map((character) =>
       fetchCharacterEquipment(character)
     );
-    const characterEquipmentArray = await Promise.all(
-      characterEquipmentPromises
-    );
+    const characterEquipmentArray = (
+      await Promise.all(characterEquipmentPromises)
+    ).filter(Boolean);
     const characterStatPromises = characters.map((character) =>
       fetchCharacterStats(character)
     );
-    const characterStatsArray = await Promise.all(characterStatPromises);
+    const characterStatsArray = (
+      await Promise.all(characterStatPromises)
+    ).filter(Boolean);
     const characterProfilePromises = characters.map((character) =>
       fetchCharacterProfile(character)
     );
-    const characterProfileArray = await Promise.all(characterProfilePromises);
+    const characterProfileArray = (
+      await Promise.all(characterProfilePromises)
+    ).filter(Boolean);
     const characterMediaPromises = characters.map((character) =>
       fetchCharacterMedia(character)
     );
-    const characterMediaArray = await Promise.all(characterMediaPromises);
+    const characterMediaArray = (
+      await Promise.all(characterMediaPromises)
+    ).filter(Boolean);
     return NextResponse.json({
       characterEquipmentArray,
       characterStatsArray,

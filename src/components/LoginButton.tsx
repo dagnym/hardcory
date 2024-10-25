@@ -7,13 +7,13 @@ const LoginButton = () => {
 
   const handleLogin = () => {
     const clientId = process.env.NEXT_PUBLIC_BNET_CLIENT_ID;
-    const redirectUri = "http://localhost:3000/"; // Change to your app's URL
+    const redirectUri = "http://localhost:3000/api/auth/callback/battlenet"; // Change to your app's URL
     const scope = "openid wow.profile";
 
     // Construct the Blizzard authorization URL
     const authorizationUrl = `https://oauth.battle.net/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(
       redirectUri
-    )}&response_type=code&scope=${encodeURIComponent(scope)}&state=''`;
+    )}&response_type=code&scope=${encodeURIComponent(scope)}&state=true`;
 
     // Redirect user to Blizzard's authorization page
     router.push(authorizationUrl);
