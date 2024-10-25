@@ -15,16 +15,16 @@ export async function GET() {
     "joshchicken",
     "pohnjork",
   ];
-  const accessToken =
-    process.env.BLIZZARD_ACCESS_TOKEN || secret("BLIZZARD_ACCESS_TOKEN");
+  // const accessToken =
+  //   process.env.BLIZZARD_ACCESS_TOKEN || secret("BLIZZARD_ACCESS_TOKEN");
   const fetchCharacterEquipment = async (character: string) => {
     const requestDomain = `https://us.api.blizzard.com/profile/wow/character/defias-pillager/${character}/equipment?namespace=profile-classic1x-us&locale=en_US`;
 
     try {
       const response = await fetch(requestDomain, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
-          // Authorization: `Bearer ${secret("BLIZZARD_ACCESS_TOKEN")}`,
+          // Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${secret("BLIZZARD_ACCESS_TOKEN")}`,
         },
       });
       if (!response.ok) {
@@ -47,8 +47,8 @@ export async function GET() {
     try {
       const response = await fetch(requestDomain, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
-          // Authorization: `Bearer ${secret("BLIZZARD_ACCESS_TOKEN")}`,
+          // Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${secret("BLIZZARD_ACCESS_TOKEN")}`,
         },
       });
       if (!response.ok) {
@@ -72,8 +72,8 @@ export async function GET() {
     try {
       const response = await fetch(requestDomain, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
-          // Authorization: `Bearer ${secret("BLIZZARD_ACCESS_TOKEN")}`,
+          // Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${secret("BLIZZARD_ACCESS_TOKEN")}`,
         },
       });
       if (!response.ok) {
@@ -97,8 +97,8 @@ export async function GET() {
     try {
       const response = await fetch(requestDomain, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
-          // Authorization: `Bearer ${secret("BLIZZARD_ACCESS_TOKEN")}`,
+          // Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${secret("BLIZZARD_ACCESS_TOKEN")}`,
         },
       });
       if (!response.ok) {
