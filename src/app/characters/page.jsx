@@ -33,7 +33,7 @@ export default function CharacterInfo() {
         setCharacterProfile(characterProfileArray);
         setCharacterMedia(characterMediaArray);
 
-        const userData =await fetch("")
+        const userData = await fetch("");
       } catch (err) {
         console.log(err);
       } finally {
@@ -96,7 +96,7 @@ export default function CharacterInfo() {
                   height={100}
                   alt="uhh"
                   src={media.data.assets[0].value}
-                  className="self-center bg-red-500 rounded-full mb-4"
+                  className="self-center bg-red-500 border border-gray-300 rounded-sm mb-4"
                 />
                 <h1 className="text-orange-400 self-center text-lg">
                   {character.character.toString().toUpperCase()}

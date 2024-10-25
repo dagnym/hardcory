@@ -1,5 +1,7 @@
 import NextAuth from "next-auth";
 import BattleNetProvider from "next-auth/providers/battlenet";
+import { defineAuth, secret } from "@aws-amplify/backend";
+
 export const authOptions = {
   // Configure one or more authentication providers
   providers: [

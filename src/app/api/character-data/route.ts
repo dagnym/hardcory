@@ -2,15 +2,19 @@
 
 import { NextRequest, NextResponse } from "next/server";
 
+import { secret } from "@aws-amplify/backend";
+
 export async function GET(request: NextRequest) {
   const characters = [
+    "johnglobson",
+    "blembogue",
+    "hewmungis",
+    "meatheals",
     "smallcrotch",
     "berominhc",
-    "blembogue",
     "globsonhc",
     "joshchicken",
-    "hewmungis",
-    "johnglobson",
+    "pohnjork",
   ];
   const accessToken = process.env.BLIZZARD_ACCESS_TOKEN;
   const fetchCharacterEquipment = async (character: string) => {
@@ -18,7 +22,9 @@ export async function GET(request: NextRequest) {
 
     try {
       const response = await fetch(requestDomain, {
-        headers: { Authorization: `Bearer ${accessToken}` },
+        headers: {
+          Authorization: `Bearer ${secret("BLIZZARD_ACCESS_TOKEN")}`,
+        },
       });
       const data = await response.json();
       return { character, data };
@@ -32,7 +38,9 @@ export async function GET(request: NextRequest) {
 
     try {
       const response = await fetch(requestDomain, {
-        headers: { Authorization: `Bearer ${accessToken}` },
+        headers: {
+          Authorization: `Bearer ${secret("BLIZZARD_ACCESS_TOKEN")}`,
+        },
       });
       const data = await response.json();
       console.log("character stats data: ", data);
@@ -47,7 +55,9 @@ export async function GET(request: NextRequest) {
 
     try {
       const response = await fetch(requestDomain, {
-        headers: { Authorization: `Bearer ${accessToken}` },
+        headers: {
+          Authorization: `Bearer ${secret("BLIZZARD_ACCESS_TOKEN")}`,
+        },
       });
       const data = await response.json();
       console.log("character profile data: ", data);
@@ -62,7 +72,9 @@ export async function GET(request: NextRequest) {
 
     try {
       const response = await fetch(requestDomain, {
-        headers: { Authorization: `Bearer ${accessToken}` },
+        headers: {
+          Authorization: `Bearer ${secret("BLIZZARD_ACCESS_TOKEN")}`,
+        },
       });
       const data = await response.json();
       return { character, data };
