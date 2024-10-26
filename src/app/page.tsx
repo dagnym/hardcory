@@ -36,6 +36,7 @@ export default function Home() {
 
   return (
     <div className="relative h-screen p-10 pb-20">
+      <h2>hi</h2>
       <div id="nav" className="flex justify-around pb-4">
         {status === "authenticated" && (
           <div className="flex space-x-4">
