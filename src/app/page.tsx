@@ -29,25 +29,35 @@ export default function Home() {
   //     {({ signOut, user }) => {
 
   return (
-    <div className="relative h-screen p-6">
+    <div className="relative h-screen p-20">
       <div id="nav" className="flex justify-around pb-4">
-        <LoginButton />
         {status === "authenticated" && (
           <h2 className="text-xl self-center text-blue-400">
-            Welcome {session.user!.name}!
+            Welcome, {session.user!.name}!
           </h2>
         )}
-        <button
-          onClick={() => router.push("/characters")}
-          className="border py-1 px-2 rounded-sm hover:bg-white hover:text-black"
-        >
-          Characters
-        </button>
+        <div className="flex space-x-2">
+          <button
+            onClick={() => router.push("/characters")}
+            className="border py-1 px-2 rounded-sm hover:bg-white hover:text-black"
+          >
+            Characters
+          </button>
+          <button
+            onClick={() => router.push("/forum/main")}
+            className="border py1 px-2 rounded-sm hover:bg-white hover:text-black"
+          >
+            Forum
+          </button>
+          <LoginButton />
+        </div>
       </div>
-      <div className="w-full border"></div>
-      {status === "loading" || status === "unauthenticated" ? (
-        <div>Loading...</div>
-      ) : null}
+      <div className="w-full h-full border p-40 bg-gnome">
+        {status === "authenticated" && (
+          <div className=" w-full h-full">we r watching u</div>
+        )}
+      </div>
+      {status === "loading" ? <div>Loading...</div> : null}
     </div>
   );
   //     }}

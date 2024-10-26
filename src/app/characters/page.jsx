@@ -85,7 +85,7 @@ export default function CharacterInfo() {
             const media = characterMedia[index];
             return (
               <div
-                key={character.name}
+                key={character.name || `character-${index}`}
                 className="border p-10 rounded-md bg-black bg-opacity-85 flex flex-col"
               >
                 <Image

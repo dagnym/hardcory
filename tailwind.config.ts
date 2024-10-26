@@ -10,6 +10,7 @@ const config: Config = {
     extend: {
       backgroundImage: {
         darkshire: "url('/images/darkshire.jpg')",
+        gnome: "url('/images/gnom.png')",
       },
       colors: {
         background: "var(--background)",
