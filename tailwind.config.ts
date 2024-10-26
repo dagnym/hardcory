@@ -11,6 +11,8 @@ const config: Config = {
       backgroundImage: {
         darkshire: "url('/images/darkshire.jpg')",
         gnome: "url('/images/gnom.png')",
+        tavern:
+          "url('https://live.staticflickr.com/1095/1361791150_2dcd86f2b1_b.jpg')",
       },
       colors: {
         background: "var(--background)",

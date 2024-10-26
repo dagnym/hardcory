@@ -18,6 +18,7 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+  cursor: url("http://www.rw-designer.com/cursor-view/1829.png"), auto;
 }
 
 @layer utilities {
