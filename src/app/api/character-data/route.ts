@@ -38,7 +38,7 @@ export async function GET() {
     "pohnjork",
   ];
   const accessToken = await getBlizzardAccessToken();
-  // console.log("access token: ", accessToken);
+  console.log("access token: ", accessToken);
   if (!accessToken) {
     return NextResponse.json({ error: "failed to retrieve" });
   }
