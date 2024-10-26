@@ -37,9 +37,15 @@ export async function GET() {
     "joshchicken",
     "pohnjork",
   ];
-  const accessToken = await getBlizzardAccessToken();
-  console.log("access token: ", accessToken);
-  if (!accessToken) {
+  let accessToken: string;
+  try {
+    accessToken = await getBlizzardAccessToken();
+    console.log("access token: ", accessToken);
+    if (!accessToken) {
+      return NextResponse.json({ error: "failed to retrieve" });
+    }
+  } catch (err) {
+    console.log("neondb error: ", err);
     return NextResponse.json({ error: "failed to retrieve" });
   }
   const fetchCharacterEquipment = async (character: string) => {
