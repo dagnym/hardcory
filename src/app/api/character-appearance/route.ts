@@ -1,7 +1,34 @@
 import { NextResponse } from "next/server";
+import pg from "pg";
+const { Pool } = pg;
+
+// Set up the connection pool for NeonDB
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false },
+});
+
+async function getBlizzardAccessToken() {
+  const client = await pool.connect();
+  try {
+    const res = await client.query(
+      "SELECT blizzard_access_token FROM secrets LIMIT 1"
+    );
+    return res.rows[0]?.blizzard_access_token || null;
+  } catch (error) {
+    console.error("Error fetching token from database:", error);
+    return null;
+  } finally {
+    client.release();
+  }
+}
 
 export async function GET() {
-  const accessToken = process.env.BLIZZARD_ACCESS_TOKEN;
+  const accessToken = getBlizzardAccessToken();
+  if (!accessToken) {
+    return NextResponse.json({ error: "failure" });
+  }
+
   // const characters = ["smallcrotch", "berominhc", "blembogue", "globsonhc"];
   const requestDomain =
     "https://us.api.blizzard.com/profile/wow/character/defias-pillager/smallcrotch/appearance?namespace=profile-classic1x-us&locale=en_US";
