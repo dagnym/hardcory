@@ -180,22 +180,4 @@ export async function GET() {
   } catch (err) {
     console.log(err);
   }
-
-  // try {
-  //   // console.log(character);
-  //   const accessToken = process.env.BLIZZARD_ACCESS_TOKEN; // Use environment variable for access token
-
-  //   for (let character in characters) {}
-
-  //   const response = await fetch(requestDomain, {
-  //     headers: {
-  //       Authorization: `Bearer ${accessToken}`,
-  //     },
-  //   });
-  //   const data = await response.json();
-  //   return NextResponse.json(data);
-  // } catch (err) {
-  //   console.log("error : ", err);
-  //   return NextResponse.json("failure");
-  // }
 }
