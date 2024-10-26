@@ -12,6 +12,7 @@ export default function CharacterInfo() {
   const [characterStats, setCharacterStats] = useState([]);
   const [characterProfile, setCharacterProfile] = useState(null);
   const [characterMedia, setCharacterMedia] = useState(null);
+  // const [characterAppearance, setCharacterAppearance] = useState(null);
   // const [error, setError] = useState(null);
   const router = useRouter();
 
@@ -72,11 +73,10 @@ export default function CharacterInfo() {
       <div className="relative">
         <div className="fixed top-0 left-0 w-full h-full bg-darkshire bg-cover -z-10"></div>
         <button
-          className="px-3 py-2 mt4 ml-4 border absolute rounded-sm"
+          className="px-3 py-2 mt4 ml-4 border absolute rounded-sm mt-2"
           onClick={() => router.push("/")}
         >
-          {" "}
-          hom
+          home
         </button>
         <div className="p-14 grid grid-cols-4 gap-10">
           {characterEquipment.map((character, index) => {
@@ -89,6 +89,7 @@ export default function CharacterInfo() {
                 className="border p-10 rounded-md bg-black bg-opacity-85 flex flex-col"
               >
                 <Image
+                  priority
                   width={100}
                   height={100}
                   alt="uhh"

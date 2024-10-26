@@ -9,7 +9,7 @@ export async function middleware(req: NextRequest) {
   if (!token) {
     return NextResponse.redirect(new URL("/", req.url));
   }
-  console.log(token, "thats thetoken");
+  //   console.log(token, "thats thetoken");
   return NextResponse.next();
 }
 

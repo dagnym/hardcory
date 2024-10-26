@@ -1,14 +1,11 @@
 "use client";
 
-import { use } from "react";
+import { useParams } from "next/navigation";
 
-interface PostPageProps {
-  params: Promise<{ slug: string | string[] }>;
-}
-
-const PostPage = ({ params }: PostPageProps) => {
-  const resolvedParams = use(params);
-  const slug = Array.isArray(resolvedParams.slug);
+const PostPage = () => {
+  const params = useParams();
+  const slug = params.slug;
+  console.log("sluh:", slug);
   return <h2>{slug}</h2>;
 };
 

@@ -4,7 +4,8 @@ import { authOptions } from "@/lib/authOptions";
 
 export async function GET() {
   const session = await getServerSession(authOptions);
-  const requestDomain = "https://us.api.blizzard.com/profile/user/wow";
+  const requestDomain =
+    "https://us.api.blizzard.com/profile/user/wow?namespace=profile-classic1x-us";
   if (!session) {
     return NextResponse.json({ data: "no session" });
   }
@@ -16,11 +17,13 @@ export async function GET() {
         Authorization: `Bearer ${userAccessToken}`,
       },
     });
+
     if (!response.ok) {
       console.error("bad response from user api", response.statusText);
       return NextResponse.json({ data: null });
     }
     const data = await response.json();
+    // console.log("uset data:", data.wow_accounts[0].characters);
     return NextResponse.json(data);
   } catch (err) {
     console.log(err);

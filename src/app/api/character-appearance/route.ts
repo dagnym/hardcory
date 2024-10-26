@@ -24,14 +24,15 @@ async function getBlizzardAccessToken() {
 }
 
 export async function GET() {
-  const accessToken = getBlizzardAccessToken();
+  const accessToken = await getBlizzardAccessToken();
+  console.log("character appearance access token: ", accessToken);
   if (!accessToken) {
     return NextResponse.json({ error: "failure" });
   }
 
   // const characters = ["smallcrotch", "berominhc", "blembogue", "globsonhc"];
   const requestDomain =
-    "https://us.api.blizzard.com/profile/wow/character/defias-pillager/smallcrotch/appearance?namespace=profile-classic1x-us&locale=en_US";
+    "https://us.api.blizzard.com/profile/wow/character/defias-pillager/blembogue/appearance?namespace=profile-classic1x-us";
   try {
     const response = await fetch(requestDomain, {
       headers: {
@@ -39,10 +40,11 @@ export async function GET() {
       },
     });
     if (!response.ok) {
-      console.error(`Failed to fetch response:`, response.statusText);
+      console.error(`Failed to fetch response:`, response);
       return NextResponse.json({ data: null });
     }
     const data = await response.json();
+    console.log("character appearnace data: ", data);
     return NextResponse.json(data);
   } catch (err) {
     console.log(err);

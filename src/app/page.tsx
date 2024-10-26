@@ -6,10 +6,10 @@ import { useRouter } from "next/navigation";
 import "@aws-amplify/ui-react/styles.css";
 
 import { useSession } from "next-auth/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 export default function Home() {
   const { data: session, status } = useSession();
-
+  const [userId, setUserId] = useState();
   const router = useRouter();
   useEffect(() => {
     console.log("status: ", status);
@@ -18,18 +18,23 @@ export default function Home() {
     const fetchUserData = async () => {
       const userData = await fetch("/api/user-data");
       const userInfo = await userData.json();
+      setUserId(userInfo.id);
       console.log("user data: ", userInfo);
     };
     if (status === "authenticated") {
       fetchUserData();
     }
   }, [status, session]);
+
+  const handleProfilePage = () => {
+    router.push(`/user/${userId}`);
+  };
   // return (
   //   <Authenticator>
   //     {({ signOut, user }) => {
 
   return (
-    <div className="relative h-screen p-20">
+    <div className="relative h-screen p-10 pb-20">
       <div id="nav" className="flex justify-around pb-4">
         {status === "authenticated" && (
           <h2 className="text-xl self-center text-blue-400">
@@ -49,6 +54,14 @@ export default function Home() {
           >
             Forum
           </button>
+          {status === "authenticated" && (
+            <button
+              onClick={handleProfilePage}
+              className="border py1 px-2 rounded-sm hover:bg-white hover:text-black"
+            >
+              My Profile
+            </button>
+          )}
           <LoginButton />
         </div>
       </div>
