@@ -14,3 +14,12 @@ export const forum_posts = pgTable("forum_posts", {
   replies: integer("replies"),
   created_at: timestamp("created_at"),
 });
+
+export const users = pgTable("users", {
+  id: serial("id").primaryKey(),
+  battlenet_id: text("battlenet_id").notNull(),
+  character: text("character"),
+  username: text("username"),
+  profilepicture: text("profilepicture"),
+  created_at: timestamp("created_at"),
+});

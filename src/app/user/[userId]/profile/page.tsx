@@ -5,10 +5,14 @@ import { useSession } from "next-auth/react";
 import { useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
+import Image from "next/image";
+
 const UserProfile = () => {
   const { data: session, status } = useSession();
   const params = useParams();
-  const slug = params.slug;
+  const userId = params.userId;
+  console.log("session: ", session);
+  const user = session?.user;
   const router = useRouter();
   useEffect(() => {
     const fetchUserData = async () => {
@@ -16,24 +20,30 @@ const UserProfile = () => {
       const userInfo = await userData.json();
       const userId = userInfo.id.toString();
 
-      if (!slug || !slug?.includes(userId)) {
+      if (!userId || !userId?.includes(userId)) {
         router.push("/");
       }
     };
     if (status === "authenticated") {
       fetchUserData();
     }
-  }, [status, slug, router]);
+  }, [status, userId, router]);
 
   const userNameRef = useRef<HTMLInputElement>(null);
-  const bioRef = useRef<HTMLTextAreaElement>(null);
+  const imageRef = useRef<HTMLInputElement>(null);
   const handleSubmit = async () => {
-    if (userNameRef.current && bioRef.current) {
+    if (userNameRef.current && imageRef.current) {
       console.log(
-        "username and bio: ",
+        "username and image: ",
         userNameRef.current.value,
-        bioRef.current.value
+        imageRef.current.value
       );
+      const username = userNameRef.current.value;
+      const imageUrl = imageRef.current.value;
+      await fetch("/api/neon/edit_user", {
+        method: "POST",
+        body: JSON.stringify({ username, imageUrl, userId }),
+      });
     }
   };
   return (
@@ -44,21 +54,33 @@ const UserProfile = () => {
       >
         Home
       </button>
-      <form className="flex flex-col w-1/4 p-10 bg-gray-600 border rounded-sm border-blue-900 bg-opacity-30 m-auto mt-20 space-y-2">
-        <h2 className="mb-4">Account: {session?.user?.name}</h2>
+      <form className="flex flex-col w-1/4 p-4 bg-gray-600 border rounded-sm border-blue-900 bg-opacity-30 m-auto mt-20 space-y-2">
+        <div className="flex flex-col self-center">
+          <h2 className="mb-4">Account: {user?.name}</h2>
+          <Image
+            alt=""
+            src={
+              user?.image ||
+              "https://static.wikia.nocookie.net/caseoh/images/2/22/Pork.png/revision/latest?cb=20240608224623"
+            }
+            height={300}
+            width={200}
+          />
+        </div>
         <label htmlFor="username">Username</label>
         <input
           ref={userNameRef}
           type="text"
           className="border text-black p-1"
+          defaultValue={user?.name || ""}
         />
-        <label htmlFor="bio">Bio</label>
-        <textarea
-          ref={bioRef}
+        <label htmlFor="image">Profile Picture link</label>
+        <input
+          ref={imageRef}
           className="text-black p-1"
-          name="bio"
-          id="bio"
-        ></textarea>
+          name="image"
+          defaultValue={user?.image || ""}
+        ></input>
         <button
           type="button"
           onClick={handleSubmit}

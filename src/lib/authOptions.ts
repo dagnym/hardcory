@@ -1,9 +1,16 @@
 import BattleNetProvider from "next-auth/providers/battlenet";
 import { JWT } from "next-auth/jwt";
 import { Account, Session } from "next-auth";
+import { db } from "@/db/drizzle";
+import { users } from "@/db/schema";
+import { eq } from "drizzle-orm";
 
 interface CustomJWT extends JWT {
   accessToken?: string;
+  userInfo?: {
+    username: string;
+    profilepicture: string;
+  };
 }
 
 export const authOptions = {
@@ -34,11 +41,44 @@ export const authOptions = {
       // When user signs in, add accessToken to the token object
       if (account) {
         token.accessToken = account.access_token;
+        const accountId = account.providerAccountId;
+        console.log("ACCOUNT LARGE: ", account);
+        try {
+          let existingUser = await db
+            .select()
+            .from(users)
+            .where(eq(users.battlenet_id, accountId));
+          if (existingUser.length === 0) {
+            await db.insert(users).values({
+              battlenet_id: accountId,
+              username: "pork recruit",
+              profilepicture:
+                "https://static.wikia.nocookie.net/caseoh/images/2/22/Pork.png/revision/latest?cb=20240608224623",
+            });
+            existingUser = await db
+              .select()
+              .from(users)
+              .where(eq(users.battlenet_id, accountId));
+          }
+          token.userInfo = {
+            username: existingUser[0]?.username || "",
+            profilepicture: existingUser[0]?.profilepicture || "",
+          };
+        } catch (err) {
+          console.log("error in jwt callback: ", err);
+        }
       }
       return token;
     },
     async session({ session, token }: { session: Session; token: CustomJWT }) {
       // Pass accessToken to the session object
+      if (token.userInfo) {
+        session.user = {
+          ...session.user,
+          name: token.userInfo.username,
+          image: token.userInfo.profilepicture,
+        };
+      }
       session.accessToken = token.accessToken;
       return session;
     },

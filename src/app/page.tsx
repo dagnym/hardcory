@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 export default function Home() {
   const { data: session, status } = useSession();
   const [userId, setUserId] = useState();
+  const user = session?.user;
   const router = useRouter();
   useEffect(() => {
     console.log("status: ", status);
@@ -27,7 +28,7 @@ export default function Home() {
   }, [status, session]);
 
   const handleProfilePage = () => {
-    router.push(`/user/${userId}`);
+    router.push(`/user/${userId}/profile`);
   };
   // return (
   //   <Authenticator>
@@ -37,9 +38,11 @@ export default function Home() {
     <div className="relative h-screen p-10 pb-20">
       <div id="nav" className="flex justify-around pb-4">
         {status === "authenticated" && (
-          <h2 className="text-xl self-center text-blue-400">
-            Welcome, {session.user!.name}!
-          </h2>
+          <div className="flex space-x-4">
+            <h2 className="text-xl self-center text-blue-400">
+              Welcome, {user!.name}!
+            </h2>
+          </div>
         )}
         <div className="flex space-x-2">
           <button
