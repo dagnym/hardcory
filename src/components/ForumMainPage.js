@@ -8,7 +8,6 @@ import { createForumPost, getForumPosts } from "@/helpers/neon_api_calls";
 
 const ForumMainPage = () => {
   const { data: session } = useSession();
-  console.log(session?.user?.name || "Guest");
 
   const userId = session?.user?.user_id;
   const router = useRouter();

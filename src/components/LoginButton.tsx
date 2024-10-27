@@ -7,8 +7,7 @@ const LoginButton = () => {
 
   const handleLogin = async () => {
     try {
-      const chicken = await signIn("battlenet");
-      console.log("login: ", chicken);
+      await signIn("battlenet");
     } catch (err) {
       console.log("error on login: ", err);
     }

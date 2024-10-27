@@ -3,11 +3,8 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
 
 export default function CharacterInfo() {
-  const { data: session } = useSession();
-  console.log("session data: ", session);
   const [characterEquipment, setCharacterEquipment] = useState([]);
   const [characterStats, setCharacterStats] = useState([]);
   const [characterProfile, setCharacterProfile] = useState(null);
@@ -40,31 +37,7 @@ export default function CharacterInfo() {
       }
     };
 
-    // const fetchCharacterProfile = async () => {
-    //   try {
-    //     const response = await fetch(`/api/character-profile`);
-    //     console.log("character response: ", response);
-    //     const data = await response.json();
-    //     console.log("character profile data: ", data);
-    //     setCharacterProfile(data);
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // };
-
-    // const fetchCharacterAppearance = async () => {
-    //   try {
-    //     const response = await fetch("/api/character-appearance");
-    //     const data = await response.json();
-    //     console.log("characer appearance data:", data);
-    //     setCharacterAppearance(data);
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // };
     fetchCharacterData();
-    // fetchCharacterProfile();
-    // fetchCharacterAppearance();
   }, []);
 
   if (loading) return <div>Loading...</div>;

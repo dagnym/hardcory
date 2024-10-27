@@ -4,8 +4,7 @@ import { users, forum_replies } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 export async function POST(req: NextRequest) {
-  const { postId, user } = await req.json();
-  console.log(user);
+  const { postId } = await req.json();
 
   try {
     const replies = await db

@@ -13,7 +13,7 @@ const UserProfile = () => {
   const { data: session, status } = useSession();
   const params = useParams();
   const userId = params.userId;
-  console.log("session: ", session);
+
   const user = session?.user;
   const router = useRouter();
   useEffect(() => {
@@ -35,11 +35,6 @@ const UserProfile = () => {
   const imageRef = useRef<HTMLInputElement>(null);
   const handleSubmit = async () => {
     if (userNameRef.current && imageRef.current) {
-      console.log(
-        "username and image: ",
-        userNameRef.current.value,
-        imageRef.current.value
-      );
       const username = userNameRef.current.value;
       const imageUrl = imageRef.current.value;
       await fetch("/api/neon/edit_user", {

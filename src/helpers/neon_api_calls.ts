@@ -20,7 +20,7 @@ export const getForumPosts = async () => {
   try {
     const response = await fetch("/api/neon/get_posts");
     const posts = await response.json();
-    console.log("posts in getforumpotst:", posts);
+
     return posts;
   } catch (err) {
     console.log("error in api call: ", err);

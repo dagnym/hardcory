@@ -13,14 +13,10 @@ export default function Home() {
   const user = session?.user;
   const router = useRouter();
   useEffect(() => {
-    console.log("status: ", status);
-    console.log("session data: ", session);
-
     const fetchUserData = async () => {
       const userData = await fetch("/api/user-data");
       const userInfo = await userData.json();
       setUserId(userInfo.id);
-      console.log("user data: ", userInfo);
     };
     if (status === "authenticated") {
       fetchUserData();

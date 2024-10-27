@@ -12,8 +12,6 @@ import PostComponent from "@/components/server_components/PostComponent";
 
 const PostPage = async ({ params }) => {
   const session = await getServerSession(authOptions);
-  console.log("session: ", session);
-  console.log("params: ", await params);
 
   const { postId } = await params;
   const post = await db
@@ -32,8 +30,7 @@ const PostPage = async ({ params }) => {
     .where(eq(forum_posts.id, postId));
 
   const postReplies = await getPostReplies(postId, session?.user);
-  console.log("post replies: ", postReplies);
-  console.log("post: ", post);
+
   return (
     <div>
       <PostComponent
