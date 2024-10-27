@@ -100,7 +100,7 @@ const ForumMainPage = () => {
                 .map((post) => (
                   <tr
                     key={post.postId}
-                    className="hover:bg-red-500 hover:scale-105 hover:cursor-crosshair"
+                    className="hover:bg-red-500 hover:cursor-crosshair"
                     onClick={() => router.push(`/forum/posts/${post.postId}`)}
                   >
                     <td className="border border-gray-300 p-2">

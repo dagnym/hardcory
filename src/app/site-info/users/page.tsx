@@ -17,7 +17,7 @@ const SiteUsersPage = async () => {
             className="flex flex-col p-4 bg-gray-600 border rounded-sm border-blue-900 bg-opacity-30 m-auto mt-20 space-y-2"
           >
             <div className="flex flex-col self-center">
-              <h2 className="mb-4">Account: {user?.username}</h2>
+              <h2 className="mb-4">{user?.username}</h2>
               <img
                 alt=""
                 src={user?.profilepicture || "https://i.imgur.com/wdpuoLF.jpeg"}
