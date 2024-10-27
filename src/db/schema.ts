@@ -1,4 +1,3 @@
-import { timeStamp } from "console";
 import { integer, text, pgTable, timestamp, serial } from "drizzle-orm/pg-core";
 export const secrets = pgTable("secrets", {
   id: integer("id").primaryKey(),

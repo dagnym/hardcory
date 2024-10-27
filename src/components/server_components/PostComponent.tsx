@@ -8,6 +8,13 @@ import { useRouter } from "next/navigation";
 
 import Image from "next/image";
 
+interface Reply {
+  replyId: number;
+  replyContent: string;
+  username: string;
+  userProfilePicture: string;
+}
+
 interface PostInterface {
   post: {
     id: number;
@@ -19,15 +26,15 @@ interface PostInterface {
     username: string | null;
     userProfilePicture: string | null;
   };
-  user: any;
-  postReplies: any;
+  user: { name: string; email: string; image: string; id: number };
+  postReplies: Reply[];
 }
 
 const PostComponent = ({ post, user, postReplies }: PostInterface) => {
   const replyRef = useRef<HTMLTextAreaElement>(null);
   const router = useRouter();
   const [isModalOpen, setModalOpen] = useState(false);
-  const [replies, setReplies] = useState([]);
+  const [replies, setReplies] = useState<Reply[]>([]);
   console.log("post: ", post);
   console.log("user in post component: ", user);
   const handleCreateReply = async () => {
@@ -48,7 +55,7 @@ const PostComponent = ({ post, user, postReplies }: PostInterface) => {
       }
     };
     getReplies();
-  }, [replies.length]);
+  }, [replies.length, post.id, user]);
   return (
     <div className="w-1/2 m-auto mt-10">
       <button
@@ -85,7 +92,7 @@ const PostComponent = ({ post, user, postReplies }: PostInterface) => {
       </div>
       {replies.length >= 1 && (
         <div className="grid gap-8 grid-rows-5 grid-cols-1">
-          {replies.map((reply: any) => (
+          {replies.map((reply) => (
             <div key={reply.replyId} className="grid grid-cols-2 gap-4">
               <div className="border flex flex-col p-4">
                 <p>{reply.replyContent}</p>

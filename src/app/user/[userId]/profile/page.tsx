@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 const UserProfile = () => {
-  const { data: session, status, update } = useSession();
+  const { data: session, status } = useSession();
   const params = useParams();
   const userId = params.userId;
   console.log("session: ", session);

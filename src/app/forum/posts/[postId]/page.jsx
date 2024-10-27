@@ -10,7 +10,7 @@ import { getPostReplies } from "@/helpers/neon_api_calls";
 
 import PostComponent from "@/components/server_components/PostComponent";
 
-const PostPage = async ({ params }: any) => {
+const PostPage = async ({ params }) => {
   const session = await getServerSession(authOptions);
   console.log("session: ", session);
   console.log("params: ", await params);
@@ -31,10 +31,7 @@ const PostPage = async ({ params }: any) => {
     .innerJoin(users, eq(forum_posts.user_id, users.id))
     .where(eq(forum_posts.id, postId));
 
-  const postReplies = await getPostReplies(
-    postId,
-    session?.user as { name: string; email: string; image: string }
-  );
+  const postReplies = await getPostReplies(postId, session?.user);
   console.log("post replies: ", postReplies);
   console.log("post: ", post);
   return (

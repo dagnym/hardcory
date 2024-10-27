@@ -51,7 +51,12 @@ export const getPostReplies = async (
 
 export const createPostReply = async (
   postId: number,
-  user: { name: string; email?: string; image: string; user_id: number },
+  user: {
+    name: string;
+    email?: string | undefined;
+    image: string;
+    id: number;
+  },
   reply: string
 ) => {
   try {
