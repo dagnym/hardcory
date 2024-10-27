@@ -8,6 +8,7 @@ const nextConfig = {
       "pbs.twimg.com",
       "static.wikia.nocookie.net",
       "i.imgur.com",
+      "64.media.tumblr.com",
     ],
   },
 };

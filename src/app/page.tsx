@@ -36,7 +36,6 @@ export default function Home() {
 
   return (
     <div className="relative h-screen p-10 pb-20">
-      <h2>hi</h2>
       <div id="nav" className="flex justify-around pb-4">
         {status === "authenticated" && (
           <div className="flex space-x-4">
@@ -69,9 +68,12 @@ export default function Home() {
           <LoginButton />
         </div>
       </div>
-      <div className="w-full h-full border p-40 bg-gnome">
+      <div className="w-full h-full border p-40 bg-ironforge bg-cover">
         {status === "authenticated" && (
-          <div className=" w-full h-full">we r watching u</div>
+          <div className="absolute right-80 bottom-20">
+            <div className=" w-full h-full">gnomes are watching</div>
+            <img src="/images/gnom.png" alt="" className="w-10 h-20" />
+          </div>
         )}
       </div>
       {status === "loading" ? <div>Loading...</div> : null}
