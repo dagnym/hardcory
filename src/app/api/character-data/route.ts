@@ -36,6 +36,7 @@ export async function GET() {
     "globsonhc",
     "joshchicken",
     "pohnjork",
+    "secsay",
   ];
   let accessToken: string;
   try {

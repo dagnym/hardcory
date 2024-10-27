@@ -6,8 +6,6 @@ import { createPostReply, getPostReplies } from "@/helpers/neon_api_calls";
 
 import { useRouter } from "next/navigation";
 
-import Image from "next/image";
-
 interface Reply {
   replyId: number;
   replyContent: string;
@@ -72,12 +70,11 @@ const PostComponent = ({ post, user, postReplies }: PostInterface) => {
           Reply
         </button>
       </div>
-      <div className="flex">
+      <div className="flex items-center">
         <div className="w-1/4 flex flex-col">
           <h2>{post.username}</h2>
-          <Image
-            width={100}
-            height={100}
+          <img
+            className="w-40 h-40"
             alt=""
             src={post.userProfilePicture || ""}
           />
@@ -99,10 +96,9 @@ const PostComponent = ({ post, user, postReplies }: PostInterface) => {
               </div>
               <div className="w-1/4">
                 <h2>{reply.username}</h2>
-                <Image
+                <img
                   src={reply.userProfilePicture}
-                  width={100}
-                  height={100}
+                  className="w-40 h-20"
                   alt=""
                 />
               </div>

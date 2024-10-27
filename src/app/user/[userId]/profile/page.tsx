@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 import { useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-import Image from "next/image";
+// import Image from "next/image";
 
 const UserProfile = () => {
   const { data: session, status } = useSession();
@@ -60,14 +60,13 @@ const UserProfile = () => {
       <form className="flex flex-col w-1/4 p-4 bg-gray-600 border rounded-sm border-blue-900 bg-opacity-30 m-auto mt-20 space-y-2">
         <div className="flex flex-col self-center">
           <h2 className="mb-4">Account: {user?.name}</h2>
-          <Image
+          <img
             alt=""
             src={
               user?.image ||
               "https://static.wikia.nocookie.net/caseoh/images/2/22/Pork.png/revision/latest?cb=20240608224623"
             }
-            height={300}
-            width={200}
+            className="w-60 h-60"
           />
         </div>
         <label htmlFor="username">Username</label>
