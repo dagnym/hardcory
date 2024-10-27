@@ -10,6 +10,7 @@ const ForumMainPage = () => {
   const { data: session } = useSession();
   console.log(session?.user?.name || "Guest");
   const user = session?.user?.name || "Guest";
+  const userId = session?.user?.user_id;
   const router = useRouter();
   const [isModalOpen, setModalOpen] = useState(false);
   const [title, setTitle] = useState("");
@@ -34,7 +35,7 @@ const ForumMainPage = () => {
     getPosts();
   }, [posts.length]);
   const handleCreatePost = async () => {
-    await createForumPost(title, content, user);
+    await createForumPost(title, content, userId);
     setPosts([]);
     // Handle post creation logic here
     setModalOpen(false);
@@ -97,8 +98,14 @@ const ForumMainPage = () => {
                   currentPage * postsPerPage
                 )
                 .map((post) => (
-                  <tr key={post.id} className="hover:bg-red-500">
-                    <td className="border border-gray-300 p-2">{post.user}</td>
+                  <tr
+                    key={post.postId}
+                    className="hover:bg-red-500"
+                    onClick={() => router.push(`/forum/posts/${post.postId}`)}
+                  >
+                    <td className="border border-gray-300 p-2">
+                      {post.username}
+                    </td>
                     <td className="border border-gray-300 p-2">{post.title}</td>
                     <td className="border border-gray-300 p-2">
                       {post.replies}

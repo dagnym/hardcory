@@ -5,11 +5,12 @@ import { forum_posts } from "@/db/schema";
 export async function POST(request: NextRequest) {
   // let data = null;
   const { title, content, user } = await request.json();
+  console.log("user in create api: ", user);
   try {
     await db.insert(forum_posts).values({
       title: title,
       content: content,
-      user: user,
+      user_id: user,
       replies: 0,
       created_at: new Date(),
     });

@@ -7,6 +7,7 @@ const nextConfig = {
       "imgur.com",
       "pbs.twimg.com",
       "static.wikia.nocookie.net",
+      "i.imgur.com",
     ],
   },
 };

@@ -1,5 +1,7 @@
 "use client";
 
+import { signIn } from "next-auth/react";
+
 import { useParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useRef, useEffect } from "react";
@@ -8,7 +10,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 const UserProfile = () => {
-  const { data: session, status } = useSession();
+  const { data: session, status, update } = useSession();
   const params = useParams();
   const userId = params.userId;
   console.log("session: ", session);
@@ -44,6 +46,7 @@ const UserProfile = () => {
         method: "POST",
         body: JSON.stringify({ username, imageUrl, userId }),
       });
+      signIn("battlenet");
     }
   };
   return (

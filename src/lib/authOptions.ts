@@ -10,6 +10,7 @@ interface CustomJWT extends JWT {
   userInfo?: {
     username: string;
     profilepicture: string;
+    user_id: number;
   };
 }
 
@@ -63,6 +64,7 @@ export const authOptions = {
           token.userInfo = {
             username: existingUser[0]?.username || "",
             profilepicture: existingUser[0]?.profilepicture || "",
+            user_id: existingUser[0]?.id || 0,
           };
         } catch (err) {
           console.log("error in jwt callback: ", err);
@@ -77,6 +79,7 @@ export const authOptions = {
           ...session.user,
           name: token.userInfo.username,
           image: token.userInfo.profilepicture,
+          user_id: token.userInfo.user_id,
         };
       }
       session.accessToken = token.accessToken;
