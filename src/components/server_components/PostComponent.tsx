@@ -33,7 +33,7 @@ const PostComponent = ({ post, user, postReplies }: PostInterface) => {
   const router = useRouter();
   const [reloadTrigger, setReloadTrigger] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
-  const [replies, setReplies] = useState<Reply[]>([]);
+  const [replies, setReplies] = useState<Reply[]>(postReplies);
   console.log("post: ", post);
   console.log("user in post component: ", user);
   const handleCreateReply = async () => {
