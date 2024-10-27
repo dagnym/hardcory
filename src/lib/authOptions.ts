@@ -52,9 +52,8 @@ export const authOptions = {
           if (existingUser.length === 0) {
             await db.insert(users).values({
               battlenet_id: accountId,
-              username: "pork recruit",
-              profilepicture:
-                "https://static.wikia.nocookie.net/caseoh/images/2/22/Pork.png/revision/latest?cb=20240608224623",
+              username: "edit username/profile image in My Profile",
+              profilepicture: "https://i.imgur.com/wdpuoLF.jpeg",
             });
             existingUser = await db
               .select()

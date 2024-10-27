@@ -57,6 +57,12 @@ export default function Home() {
           >
             Forum
           </button>
+          <button
+            onClick={() => router.push("/site-info/users")}
+            className="border py1 px-2 rounded-sm hover:bg-white hover:text-black"
+          >
+            Site Users
+          </button>
           {status === "authenticated" && (
             <button
               onClick={handleProfilePage}
