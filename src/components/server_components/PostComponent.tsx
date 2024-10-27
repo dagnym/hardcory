@@ -11,6 +11,7 @@ interface Reply {
   replyContent: string;
   username: string;
   userProfilePicture: string;
+  created_at: Date;
 }
 
 interface PostInterface {
@@ -34,19 +35,18 @@ const PostComponent = ({ post, user, postReplies }: PostInterface) => {
   const [reloadTrigger, setReloadTrigger] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const [replies, setReplies] = useState<Reply[]>(postReplies);
-  console.log("post: ", post);
-  console.log("user in post component: ", user);
+
   const handleCreateReply = async () => {
     const reply = replyRef?.current?.value || "";
     await createPostReply(post.id, user, reply);
-    console.log("reply : ", reply);
+
     setReloadTrigger(!reloadTrigger);
   };
   useEffect(() => {
     const getReplies = async () => {
       try {
         const existingReplies = await getPostReplies(post.id, user);
-        console.log("existing replies: ", existingReplies);
+        // console.log("existing replies: ", existingReplies);
         setReplies(existingReplies);
         setModalOpen(false);
       } catch (err) {
@@ -89,17 +89,30 @@ const PostComponent = ({ post, user, postReplies }: PostInterface) => {
         <div className="bg-gray-700 w-full h-full border p-2">
           <h2 className="text-2xl border-b p-4">{post.title}</h2>
           <p className="p-4">{post.content}</p>
+          <p className="border-t p-2 flex justify-end text-xs ">
+            Posted: {post.created_at?.toString()}
+          </p>
         </div>
       </div>
       <div className="p-4 w-full flex justify-center">
-        {replies.length === 0 && <div>No replies yet...</div>}
+        {replies.length === 0 && (
+          <div className="text-orange-500 text-xl border-b border-t p-2">
+            No replies yet...
+          </div>
+        )}
+        {replies.length >= 1 && (
+          <div className="text-orange-500 text-xl border-b border-t p-2">
+            User responses
+          </div>
+        )}
       </div>
       {replies.length >= 1 && (
         <div className="grid gap-8 grid-rows-5 grid-cols-1">
           {replies.map((reply) => (
             <div key={reply.replyId} className="grid grid-cols-2 gap-4">
-              <div className="border flex flex-col p-4">
+              <div className="border flex flex-col p-4 justify-between">
                 <p>{reply.replyContent}</p>
+                <p className="text-xs">Posted: {reply.created_at.toString()}</p>
               </div>
               <div className="w-1/4">
                 <h2>{reply.username}</h2>
