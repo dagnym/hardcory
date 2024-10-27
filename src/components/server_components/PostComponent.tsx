@@ -31,6 +31,7 @@ interface PostInterface {
 const PostComponent = ({ post, user, postReplies }: PostInterface) => {
   const replyRef = useRef<HTMLTextAreaElement>(null);
   const router = useRouter();
+  const [reloadTrigger, setReloadTrigger] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const [replies, setReplies] = useState<Reply[]>([]);
   console.log("post: ", post);
@@ -39,7 +40,7 @@ const PostComponent = ({ post, user, postReplies }: PostInterface) => {
     const reply = replyRef?.current?.value || "";
     await createPostReply(post.id, user, reply);
     console.log("reply : ", reply);
-    setReplies([]);
+    setReloadTrigger(!reloadTrigger);
   };
   useEffect(() => {
     const getReplies = async () => {
@@ -53,14 +54,20 @@ const PostComponent = ({ post, user, postReplies }: PostInterface) => {
       }
     };
     getReplies();
-  }, [replies.length, post.id, user]);
+  }, [reloadTrigger, post.id, user]);
   return (
     <div className="w-1/2 m-auto mt-10">
       <button
         className="border px-2 py-1 rounded-sm"
         onClick={() => router.push("/")}
       >
-        home
+        Home
+      </button>
+      <button
+        onClick={() => router.push("/forum/main")}
+        className="ml-2 px-2 py-1 border rounded-sm"
+      >
+        Back
       </button>
       <div className="w-full flex justify-end mt-10">
         <button
@@ -85,7 +92,7 @@ const PostComponent = ({ post, user, postReplies }: PostInterface) => {
         </div>
       </div>
       <div className="p-4 w-full flex justify-center">
-        {postReplies.length === 0 && <div>No replies yet...</div>}
+        {replies.length === 0 && <div>No replies yet...</div>}
       </div>
       {replies.length >= 1 && (
         <div className="grid gap-8 grid-rows-5 grid-cols-1">

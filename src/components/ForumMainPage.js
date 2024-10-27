@@ -18,7 +18,7 @@ const ForumMainPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 8; // Adjust as needed
   const [posts, setPosts] = useState([]);
-
+  const [reloadTrigger, setReloadTrigger] = useState(false);
   const totalPages = Math.ceil(posts.length / postsPerPage);
   const pagesPerSet = 3; // Display 6 page numbers at a time
   const currentSet = Math.ceil(currentPage / pagesPerSet);
@@ -33,10 +33,10 @@ const ForumMainPage = () => {
       }
     };
     getPosts();
-  }, [posts.length]);
+  }, [reloadTrigger]);
   const handleCreatePost = async () => {
     await createForumPost(title, content, userId);
-    setPosts([]);
+    setReloadTrigger(!reloadTrigger);
     // Handle post creation logic here
     setModalOpen(false);
   };
