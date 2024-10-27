@@ -60,9 +60,9 @@ const ForumMainPage = () => {
         >
           Home
         </button>
-        {/* {session && (
-          <span className="text-2xl font-semibold ">{session.user.name}</span>
-        )} */}
+        <h2 className="text-xl bg-black p-2 bg-opacity-80 rounded-lg">
+          (click a post to view/reply to it)
+        </h2>
         <button
           className="bg-blue-900 bg-opacity-90 text-white px-4 py-2 rounded hover:bg-green-600"
           onClick={() => setModalOpen(true)}
@@ -100,7 +100,7 @@ const ForumMainPage = () => {
                 .map((post) => (
                   <tr
                     key={post.postId}
-                    className="hover:bg-red-500 hover:scale-105"
+                    className="hover:bg-red-500 hover:scale-105 hover:cursor-crosshair"
                     onClick={() => router.push(`/forum/posts/${post.postId}`)}
                   >
                     <td className="border border-gray-300 p-2">

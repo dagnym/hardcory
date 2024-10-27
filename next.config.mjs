@@ -9,6 +9,7 @@ const nextConfig = {
       "static.wikia.nocookie.net",
       "i.imgur.com",
       "64.media.tumblr.com",
+      "rw-designer.com",
     ],
   },
 };
