@@ -74,3 +74,20 @@ export const createPostReply = async (
     return err;
   }
 };
+
+export const sendPrivateMessage = async (
+  selectedUserId: number,
+  senderUserId: number,
+  subject: string,
+  message: string
+) => {
+  try {
+    await fetch("/api/neon/send-private-message", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ selectedUserId, senderUserId, subject, message }),
+    });
+  } catch (err) {
+    console.log("error: ", err);
+  }
+};

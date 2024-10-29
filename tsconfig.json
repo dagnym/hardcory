@@ -31,7 +31,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/app/api/find-defias/route.js",
-    "src/app/forum/posts/[postId]/page.jsx"
+    "src/app/forum/posts/[postId]/page.jsx",
+    "src/app/user/[userId]/messages/page.js"
   ],
   "exclude": ["node_modules"]
 }

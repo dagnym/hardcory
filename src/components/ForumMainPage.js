@@ -105,7 +105,9 @@ const ForumMainPage = () => {
                     <td className="border border-gray-300 p-2">
                       {post.username}
                     </td>
-                    <td className="border border-gray-300 p-2">{post.title}</td>
+                    <td className="border border-gray-300 p-2 ">
+                      {post.title}
+                    </td>
                     <td className="border border-gray-300 p-2">
                       {post.replies}
                     </td>

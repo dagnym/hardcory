@@ -45,12 +45,20 @@ const UserProfile = () => {
     }
   };
   return (
-    <div className="w-full h-full p-10">
+    <div className="w-full h-full p-10 flex flex-col items-center">
       <button
         onClick={() => router.push("/")}
-        className="border py-1 px-2 rounded-sm hover:bg-blue-900"
+        className="border py-1 px-2 rounded-sm hover:bg-blue-900 w-1/4"
       >
         Home
+      </button>
+      <button
+        onClick={() => {
+          router.push(`/user/${userId}/messages`);
+        }}
+        className="border py-1 px-2 rounded-sm hover:bg-blue-900 w-1/4"
+      >
+        View Messages
       </button>
       <form className="flex flex-col w-1/4 p-4 bg-gray-600 border rounded-sm border-blue-900 bg-opacity-30 m-auto mt-20 space-y-2">
         <div className="flex flex-col self-center">

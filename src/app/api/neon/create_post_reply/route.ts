@@ -3,9 +3,9 @@ import { db } from "@/db/drizzle";
 import { forum_replies } from "@/db/schema";
 
 export async function POST(req: NextRequest) {
-  const { postId, user, reply } = await req.json();
-  console.log("accessible valurd: ", postId, user, reply);
   try {
+    const { postId, user, reply } = await req.json();
+    console.log("accessible valurd: ", postId, user, reply);
     await db.insert(forum_replies).values({
       post_id: postId,
       user_id: user.user_id,

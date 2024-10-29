@@ -43,7 +43,7 @@ export default function Home() {
         <div className="flex space-x-2">
           <button
             onClick={() => router.push("/characters")}
-            className="border py-1 px-2 rounded-sm hover:bg-white hover:text-black"
+            className="border py-1 px-2 rounded-sm hover:bg-white hover:text-black "
           >
             Characters
           </button>

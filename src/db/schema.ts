@@ -39,3 +39,17 @@ export const forum_replies = pgTable("forum_replies", {
   created_at: timestamp("created_at"),
   updated_at: timestamp("updated_at"),
 });
+
+export const private_messages = pgTable("private_messages", {
+  id: serial("id").primaryKey(),
+  sender_id: integer("sender_id").references(() => users.id, {
+    onDelete: "cascade",
+  }),
+  recipient_id: integer("recipient_id").references(() => users.id, {
+    onDelete: "cascade",
+  }),
+  subject: text("subject"),
+  content: text("content"),
+  created_at: timestamp("created_at", { withTimezone: true }).defaultNow(),
+  opened_at: timestamp("opened_at", { withTimezone: true }),
+});
