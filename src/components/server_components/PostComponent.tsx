@@ -46,8 +46,12 @@ const PostComponent = ({ post, user, postReplies }: PostInterface) => {
     const getReplies = async () => {
       try {
         const existingReplies = await getPostReplies(post.id, user);
+        const sortedReplies = existingReplies.sort(
+          (a: Reply, b: Reply) =>
+            new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+        );
         // console.log("existing replies: ", existingReplies);
-        setReplies(existingReplies);
+        setReplies(sortedReplies);
         setModalOpen(false);
       } catch (err) {
         console.log("error in getposts: ", err);
@@ -56,7 +60,7 @@ const PostComponent = ({ post, user, postReplies }: PostInterface) => {
     getReplies();
   }, [reloadTrigger, post.id, user]);
   return (
-    <div className="w-1/2 m-auto mt-10">
+    <div className="w-1/2 m-auto mt-10 pb-10">
       <button
         className="border px-2 py-1 rounded-sm"
         onClick={() => router.push("/")}
