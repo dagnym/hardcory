@@ -66,7 +66,7 @@ export default function CharacterInfo() {
                   width={100}
                   height={100}
                   alt="uhh"
-                  src={media.data.assets[0].value}
+                  src={media?.data?.assets[0].value || null}
                   className="self-center bg-red-500 border border-gray-300 rounded-sm mb-4 "
                 />
                 <h1 className="text-orange-400 self-center text-lg">
@@ -75,7 +75,7 @@ export default function CharacterInfo() {
                 <br></br>
 
                 <ul className="flex flex-col items-center">
-                  {character.data.equipped_items.map((item) => {
+                  {character?.data?.equipped_items?.map((item) => {
                     return (
                       <p className="text-green-500" key={item.slot.type}>
                         {item.name}{" "}
@@ -85,10 +85,10 @@ export default function CharacterInfo() {
                 </ul>
                 <h1 className="text-lg">Level:</h1>
                 <pre className="text-blue-400">
-                  {JSON.stringify(profile.data.level, null, 2)}
+                  {JSON.stringify(profile?.data?.level || "", null, 2)}
                 </pre>
                 <h1 className="text-lg">Status:</h1>
-                {profile.data.is_ghost ? (
+                {profile?.data?.is_ghost ? (
                   <div className="text-red-600">
                     👎 DEAD LIKE TIM ALLEN SHOULD BE 👎
                   </div>
@@ -99,7 +99,7 @@ export default function CharacterInfo() {
                 )}
                 <h2 className="text-lg">Health: </h2>
                 <pre className="text-red-400">
-                  {JSON.stringify(stats.data.health, null, 2)}
+                  {JSON.stringify(stats?.data?.health, null, 2)}
                 </pre>
               </div>
             );

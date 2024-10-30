@@ -19,7 +19,7 @@ const SiteUsersPage = async () => {
               <h2 className="mb-4">{user?.username}</h2>
               <img
                 alt=""
-                src={user?.profilepicture || "https://i.imgur.com/wdpuoLF.jpeg"}
+                src={user?.profilepicture || ""}
                 className="w-60 h-60"
               />
             </div>
