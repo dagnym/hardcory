@@ -29,7 +29,7 @@ const UserMessagesPage = async () => {
                 className="p-4 border flex space-x-10 items-center"
               >
                 <h1 className="text-2xl text-blue-500">
-                  Sent by {message.userDetails.name}
+                  {message.userDetails.name}
                 </h1>
                 <h2>
                   {message.content.length > 10

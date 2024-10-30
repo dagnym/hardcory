@@ -26,7 +26,11 @@ const ForumMainPage = () => {
     const getPosts = async () => {
       try {
         const existingPosts = await getForumPosts();
-        setPosts(existingPosts);
+        const sortedPosts = existingPosts.sort(
+          (a, b) =>
+            new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+        );
+        setPosts(sortedPosts);
       } catch (err) {
         console.log("error in getposts: ", err);
       }
