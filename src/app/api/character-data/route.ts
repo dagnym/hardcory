@@ -28,15 +28,16 @@ async function getBlizzardAccessToken() {
 export async function GET() {
   const characters = [
     "johnglobson",
+    "blembetta",
+    "meatheals",
+    "ehhbubbyii",
+    "smallcrotch",
     "blembogue",
     "hewmungis",
-    "meatheals",
-    "smallcrotch",
     "berominhc",
     "globsonhc",
     "joshchicken",
     "pohnjork",
-    "secsay",
   ];
   let accessToken: string;
   try {
