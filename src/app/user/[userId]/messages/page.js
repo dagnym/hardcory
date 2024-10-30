@@ -16,14 +16,18 @@ const UserMessagesPage = async () => {
     (message) => message.sender_id !== sessionUserId
   );
 
-  // console.log("messages: ", messages);
+  console.log("messages: ", messages);
   return (
     <div className="w-full h-screen p-20 flex flex-col">
+      <a href="/">Home</a>
       <div className="m-auto h-1/2 w-1/2 border p-6">
         <div className="w-full h-full border overflow-y-scroll">
           <ul className="">
             {messages.map((message) => (
-              <div key={message.id} className="p-4 border flex space-x-10">
+              <div
+                key={message.id}
+                className="p-4 border flex space-x-10 items-center"
+              >
                 <h1 className="text-2xl text-blue-500">
                   Sent by {message.userDetails.name}
                 </h1>
@@ -37,6 +41,12 @@ const UserMessagesPage = async () => {
                     ? `${message.created_at.toLocaleString()} (Delivered)`
                     : `${message.created_at.toLocaleString()} (Received)`}
                 </h3>
+                <a
+                  href={`./message/${message.id}?username=${message.userDetails.name}`}
+                  className="border p-2 rounded-sm"
+                >
+                  OPEN
+                </a>
               </div>
             ))}
           </ul>
