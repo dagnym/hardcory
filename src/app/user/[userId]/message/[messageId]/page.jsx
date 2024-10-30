@@ -36,12 +36,17 @@ const MessagePage = async ({ params, searchParams }) => {
       )
     );
 
+  const sortedConversation = conversation.sort(
+    (a, b) =>
+      new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+  );
+
   console.log("conversatoin: ", conversation);
   return (
     <div className="p-20 space-y-4">
       <a href="../messages">back</a>
       <h2 className="border-b p-2">conversation</h2>
-      {conversation.map((message) => (
+      {sortedConversation.map((message) => (
         <div className="p-2 border w-1/2" key={message.id}>
           <h2>
             {message.sender_id === sessionUserId
