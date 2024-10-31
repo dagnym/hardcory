@@ -1,5 +1,5 @@
 import { db } from "@/db/drizzle";
-import { private_messages } from "@/db/schema";
+import { private_messages, users } from "@/db/schema";
 import { eq, or, and } from "drizzle-orm";
 import { getServerSession } from "next-auth";
 // import { getUserMessages } from "@/helpers/neon_backend_calls";
@@ -16,10 +16,24 @@ const MessagePage = async ({ params, searchParams }) => {
   const sessionUserId = session?.user.user_id;
 
   const message = await db
-    .select()
+    .select({
+      id: private_messages.id,
+      sender_id: private_messages.sender_id,
+      recipient_id: private_messages.recipient_id,
+      subject: private_messages.subject,
+      content: private_messages.content,
+      created_at: private_messages.created_at,
+      sender: {
+        id: users.id,
+        name: users.username,
+        profilepicture: users.profilepicture,
+      },
+    })
     .from(private_messages)
+    .innerJoin(users, eq(private_messages.sender_id, users.id))
     .where(eq(private_messages.id, messageId));
-  console.log("message: ", message[0]);
+  console.log("message: ", message[0].sender);
+  const senderProfilePicture = message[0].sender.profilepicture;
   const conversation = await db
     .select()
     .from(private_messages)
@@ -47,12 +61,28 @@ const MessagePage = async ({ params, searchParams }) => {
       <a href="../messages">back</a>
       <h2 className="border-b p-2">conversation</h2>
       {sortedConversation.map((message) => (
-        <div className="p-2 border w-1/2" key={message.id}>
-          <h2>
-            {message.sender_id === sessionUserId
-              ? `You (${session?.user.name}) said: "${message.content}"`
-              : `${senderName} said: "${message.content}"`}
-          </h2>
+        <div className="p-2 border w-1/2 flex" key={message.id}>
+          <div className="flex items-center space-x-2">
+            <img
+              className="h-14 w-14"
+              src={
+                message.sender_id === sessionUserId
+                  ? `${session.user.image}`
+                  : `${senderProfilePicture}`
+              }
+              alt="profilepic"
+            />
+            <h2 className="text-xl text-green-400">
+              {message.sender_id === sessionUserId
+                ? `You (${session?.user.name}): `
+                : `${senderName}: `}
+            </h2>
+            <h2 className="pl-10 text-lg">
+              {message.sender_id === sessionUserId
+                ? `"${message.content}"`
+                : `"${message.content}"`}
+            </h2>
+          </div>
         </div>
       ))}
       <ReplyForm senderId={message[0].sender_id} senderName={senderName} />

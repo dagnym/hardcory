@@ -80,6 +80,14 @@ const UserProfile = () => {
           defaultValue={user?.name || ""}
         />
         <label htmlFor="image">Profile Picture link</label>
+        <p className="text-red-500 ">
+          NOTE: Link needs to include a filetype, for example:
+          https://imgur.com/30tqobm.jpg
+        </p>
+        <p className="text-red-400 text-sm">
+          You can get it by visiting an image on imgur, right clicking, and
+          clicking &quot;open image in new tab&quot;
+        </p>
         <input
           ref={imageRef}
           className="text-black p-1"

@@ -5,13 +5,13 @@ import { useRef } from "react";
 
 import { useSession } from "next-auth/react";
 
-const MessageForm = () => {
+const MessageForm = (users) => {
   const { data: session } = useSession();
-
+  console.log("users: ", users);
   const senderUserId = Number(session?.user?.user_id);
-  const selectUserRef = useRef<HTMLSelectElement>(null);
-  const subjectRef = useRef<HTMLInputElement>(null);
-  const messageRef = useRef<HTMLTextAreaElement>(null);
+  const selectUserRef = useRef(null);
+  const subjectRef = useRef(null);
+  const messageRef = useRef(null);
 
   const sendMessageHandler = async () => {
     const selectedUserId = Number(selectUserRef?.current?.value);
@@ -30,8 +30,11 @@ const MessageForm = () => {
           name="users"
           id="users"
         >
-          <option value={1}>josh chicken</option>
-          <option value={2}>globs</option>
+          {users.users.map((user) => (
+            <option key={user.id} value={user.id}>
+              {user.username}
+            </option>
+          ))}
         </select>
       </div>
       <div className="flex flex-col">

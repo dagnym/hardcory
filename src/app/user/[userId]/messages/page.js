@@ -4,9 +4,12 @@ import { getUserMessages } from "@/helpers/neon_backend_calls";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
 import MessageForm from "@/components/MessageForm";
+import { db } from "@/db/drizzle";
+import { users } from "@/db/schema";
 
 const UserMessagesPage = async () => {
   const session = await getServerSession(authOptions);
+  const siteUsers = await db.select().from(users);
 
   const sessionUserId = session.user.user_id;
   const receivedMessages = await getUserMessages(sessionUserId);
@@ -52,7 +55,7 @@ const UserMessagesPage = async () => {
           </ul>
         </div>
       </div>
-      <MessageForm />
+      <MessageForm users={siteUsers} />
     </div>
   );
 };
