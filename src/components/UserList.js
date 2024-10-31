@@ -1,6 +1,7 @@
 "use client";
 
 const UserList = ({ users }) => {
+  console.log("users: ", users);
   return (
     <div className="grid grid-cols-4  mt-20">
       {users.map((user) => (

@@ -1,11 +1,12 @@
 "use client";
 
 import { sendPrivateMessage } from "@/helpers/neon_api_calls";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 import { useSession } from "next-auth/react";
 
 const MessageForm = (users) => {
+  const [sent, setSent] = useState();
   const { data: session } = useSession();
   console.log("users: ", users);
   const senderUserId = Number(session?.user?.user_id);
@@ -19,6 +20,7 @@ const MessageForm = (users) => {
     const message = messageRef?.current?.value || "";
 
     await sendPrivateMessage(selectedUserId, senderUserId, subject, message);
+    setSent(true);
   };
   return (
     <form className="p-10 m-auto w-1/2 h-1/2 bg-black bg-opacity-20 border border-black rounded-sm grid grid-cols-2">
@@ -37,19 +39,32 @@ const MessageForm = (users) => {
           ))}
         </select>
       </div>
-      <div className="flex flex-col">
-        <label htmlFor="subject">subject</label>
-        <input ref={subjectRef} className="text-black p-1" type="text" />
-        <label htmlFor="content">message</label>
-        <textarea ref={messageRef} className="text-black p-1" rows={7} />
-        <button
-          type="button"
-          onClick={() => sendMessageHandler()}
-          className="self-end px-2 py-1 border hover:bg-black hover:text-white"
-        >
-          send
-        </button>
-      </div>
+      {sent ? (
+        <div className="flex flex-col h-full">
+          <h2>SENT!</h2>
+          <button
+            type="button"
+            onClick={() => setSent(false)}
+            className="self-end px-2 py-1 border hover:bg-black hover:text-white"
+          >
+            send another?
+          </button>
+        </div>
+      ) : (
+        <div className="flex flex-col h-full">
+          <label htmlFor="subject">subject</label>
+          <input ref={subjectRef} className="text-black p-1" type="text" />
+          <label htmlFor="content">message</label>
+          <textarea ref={messageRef} className="text-black p-1" rows={7} />
+          <button
+            type="button"
+            onClick={() => sendMessageHandler()}
+            className="self-end px-2 py-1 border hover:bg-black hover:text-white"
+          >
+            send
+          </button>
+        </div>
+      )}
     </form>
   );
 };

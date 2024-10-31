@@ -7,7 +7,7 @@ import UserList from "@/components/UserList";
 
 const SiteUsersPage = async () => {
   const siteUsers = await db.select().from(users);
-  console.log("site users: ", siteUsers);
+
   return (
     <div className="w-full h-full p-20">
       <a href="/" className="border px-2 py-1 rounded-sm">
