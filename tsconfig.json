@@ -34,7 +34,8 @@
     "src/app/forum/posts/[postId]/page.jsx",
     "src/app/user/[userId]/messages/page.js",
     "src/components/ReplyForm.jsx",
-    "src/app/user/[userId]/message/[messageId]/page.jsx"
+    "src/app/user/[userId]/message/[messageId]/page.jsx",
+    "src/components/UserList.js"
   ],
   "exclude": ["node_modules"]
 }
