@@ -1,5 +1,6 @@
-"use server";
-export const revalidate = 0;
+export const metadata = {
+  revalidate: 0,
+};
 
 import { db } from "@/db/drizzle";
 import { users } from "@/db/schema";
