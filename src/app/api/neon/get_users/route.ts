@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 import { users } from "@/db/schema";
 import { db } from "@/db/drizzle";
