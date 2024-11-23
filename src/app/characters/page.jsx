@@ -51,7 +51,16 @@ export default function CharacterInfo() {
         >
           home
         </button>
-        <div className="p-14 grid grid-cols-4 gap-10">
+
+        <div className="p-14 grid lg:grid-cols-4 gap-10">
+          <div className="flex p-4 space-x-2">
+            <input
+              placeholder="add your character!"
+              type="text"
+              className="p-1"
+            />
+            <button className="px-2 py-1 border">click</button>
+          </div>
           {characterEquipment.map((character, index) => {
             const stats = characterStats[index];
             const profile = characterProfile[index];

@@ -32,15 +32,15 @@ export default function Home() {
 
   return (
     <div className="relative h-screen p-10 pb-20">
-      <div id="nav" className="flex justify-around pb-4">
+      <div id="nav" className="flex flex-col lg:flex-row justify-around pb-4">
         {status === "authenticated" && (
-          <div className="flex space-x-4">
+          <div className="flex space-x-4 self-center lg:self-auto">
             <h2 className="text-xl self-center text-blue-400">
               Welcome, {user!.name}!
             </h2>
           </div>
         )}
-        <div className="flex space-x-2">
+        <div className="flex space-x-1 lg:space-x-2">
           <button
             onClick={() => router.push("/characters")}
             className="border py-1 px-2 rounded-sm hover:bg-white hover:text-black "
