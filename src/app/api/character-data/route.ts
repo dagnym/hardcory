@@ -27,20 +27,11 @@ async function getBlizzardAccessToken() {
 
 export async function GET() {
   const characters = [
-    "janepork",
-
-    "globsonhc",
-    "blembetta",
-    "ehhbubbyii",
-    "pohnjork",
-    "smallcrotch",
-    "hewmungis",
-    "blembogue",
-
-    "berominhc",
-    "meatheals",
-    "joshchicken",
-    "johnglobson",
+    "lowiqvirgin",
+    "hairplug",
+    "dayofdefeat",
+    "doorknob",
+    "howudoinmon",
   ];
   let accessToken: string;
   try {
@@ -54,7 +45,7 @@ export async function GET() {
     return NextResponse.json({ error: "failed to retrieve" });
   }
   const fetchCharacterEquipment = async (character: string) => {
-    const requestDomain = `https://us.api.blizzard.com/profile/wow/character/defias-pillager/${character}/equipment?namespace=profile-classic1x-us&locale=en_US`;
+    const requestDomain = `https://us.api.blizzard.com/profile/wow/character/doomhowl/${character}/equipment?namespace=profile-classic1x-us&locale=en_US`;
 
     try {
       const response = await fetch(requestDomain, {
@@ -71,6 +62,7 @@ export async function GET() {
         return { character, data: null };
       }
       const data = await response.json();
+      console.log("data: ", data);
       return { character, data };
     } catch (err) {
       console.log(err);
@@ -78,7 +70,7 @@ export async function GET() {
   };
 
   const fetchCharacterStats = async (character: string) => {
-    const requestDomain = `https://us.api.blizzard.com/profile/wow/character/defias-pillager/${character}/statistics?namespace=profile-classic1x-us&locale=en_US`;
+    const requestDomain = `https://us.api.blizzard.com/profile/wow/character/doomhowl/${character}/statistics?namespace=profile-classic1x-us&locale=en_US`;
 
     try {
       const response = await fetch(requestDomain, {
@@ -103,7 +95,7 @@ export async function GET() {
   };
 
   const fetchCharacterProfile = async (character: string) => {
-    const requestDomain = `https://us.api.blizzard.com/profile/wow/character/defias-pillager/${character}?namespace=profile-classic1x-us&locale=en_US`;
+    const requestDomain = `https://us.api.blizzard.com/profile/wow/character/doomhowl/${character}?namespace=profile-classic1x-us&locale=en_US`;
 
     try {
       const response = await fetch(requestDomain, {
@@ -128,7 +120,7 @@ export async function GET() {
   };
 
   const fetchCharacterMedia = async (character: string) => {
-    const requestDomain = `https://us.api.blizzard.com/profile/wow/character/defias-pillager/${character}/character-media?namespace=profile-classic1x-us&locale=en_US`;
+    const requestDomain = `https://us.api.blizzard.com/profile/wow/character/doomhowl/${character}/character-media?namespace=profile-classic1x-us&locale=en_US`;
 
     try {
       const response = await fetch(requestDomain, {

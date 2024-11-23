@@ -35,7 +35,8 @@
     "src/app/user/[userId]/messages/page.js",
     "src/components/ReplyForm.jsx",
     "src/app/user/[userId]/message/[messageId]/page.jsx",
-    "src/components/UserList.js"
+    "src/components/UserList.js",
+    "src/components/MessageForm.jsx"
   ],
   "exclude": ["node_modules"]
 }
