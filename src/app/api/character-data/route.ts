@@ -29,7 +29,7 @@ export async function GET() {
   const characters = [
     "lowiqvirgin",
     "hairplug",
-    "sparagus",
+
     "howudoinmon",
     "itsbubby",
     "dayofdefeat",
