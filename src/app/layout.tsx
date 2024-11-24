@@ -4,6 +4,8 @@ import "./globals.css";
 
 import SessionComponent from "@/components/SessionComponent";
 
+import AmplifyInitializer from "@/components/AmplifyInitializer";
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -30,7 +32,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SessionComponent>{children} </SessionComponent>
+        <AmplifyInitializer>
+          <SessionComponent>{children} </SessionComponent>
+        </AmplifyInitializer>
       </body>
     </html>
   );

@@ -4,6 +4,17 @@ import { NextResponse } from "next/server";
 import pg from "pg";
 const { Pool } = pg;
 
+import { Amplify } from "aws-amplify";
+
+import config from "~/amplify_outputs.json";
+
+Amplify.configure(config);
+
+import { generateClient } from "aws-amplify/data";
+import { type Schema } from "~/amplify/data/resource";
+
+const client = generateClient<Schema>();
+
 // Set up the connection pool for NeonDB
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -26,19 +37,23 @@ async function getBlizzardAccessToken() {
 }
 
 export async function GET() {
-  const characters = [
-    "lowiqvirgin",
-    "hairplug",
+  // const characters = [
+  //   "lowiqvirgin",
+  //   "hairplug",
+  //   "howudoinmon",
+  //   "itsbubby",
+  //   "dayofdefeat",
+  //   "doorknob",
+  // ];
 
-    "howudoinmon",
-    "itsbubby",
-    "dayofdefeat",
-    "doorknob",
-  ];
+  const { errors, data: characters } = await client.models.Character.list();
+  const characterNames = characters.map((character) => character.name);
+  console.log("character names: ", characterNames);
+  console.log("characters: ", characters);
   let accessToken: string;
   try {
     accessToken = await getBlizzardAccessToken();
-    console.log("access token: ", accessToken);
+    // console.log("access token: ", accessToken);
     if (!accessToken) {
       return NextResponse.json({ error: "failed to retrieve" });
     }
@@ -64,7 +79,7 @@ export async function GET() {
         return { character, data: null };
       }
       const data = await response.json();
-      console.log("data: ", data);
+      // console.log("data: ", data);
       return { character, data };
     } catch (err) {
       console.log(err);
@@ -146,26 +161,26 @@ export async function GET() {
   };
 
   try {
-    const characterEquipmentPromises = characters.map((character) =>
-      fetchCharacterEquipment(character)
+    const characterEquipmentPromises = characterNames.map((character) =>
+      fetchCharacterEquipment(character as string)
     );
     const characterEquipmentArray = (
       await Promise.all(characterEquipmentPromises)
     ).filter(Boolean);
-    const characterStatPromises = characters.map((character) =>
-      fetchCharacterStats(character)
+    const characterStatPromises = characterNames.map((character) =>
+      fetchCharacterStats(character as string)
     );
     const characterStatsArray = (
       await Promise.all(characterStatPromises)
     ).filter(Boolean);
-    const characterProfilePromises = characters.map((character) =>
-      fetchCharacterProfile(character)
+    const characterProfilePromises = characterNames.map((character) =>
+      fetchCharacterProfile(character as string)
     );
     const characterProfileArray = (
       await Promise.all(characterProfilePromises)
     ).filter(Boolean);
-    const characterMediaPromises = characters.map((character) =>
-      fetchCharacterMedia(character)
+    const characterMediaPromises = characterNames.map((character) =>
+      fetchCharacterMedia(character as string)
     );
     const characterMediaArray = (
       await Promise.all(characterMediaPromises)

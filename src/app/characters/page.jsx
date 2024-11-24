@@ -4,11 +4,23 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
+import { Amplify } from "aws-amplify";
+
+import config from "~/amplify_outputs.json";
+
+Amplify.configure(config);
+
+import { generateClient } from "aws-amplify/data";
+// import { type Schema } from "~/amplify/data/resource";
+
+const client = generateClient();
+
 export default function CharacterInfo() {
   const [characterEquipment, setCharacterEquipment] = useState([]);
   const [characterStats, setCharacterStats] = useState([]);
   const [characterProfile, setCharacterProfile] = useState(null);
   const [characterMedia, setCharacterMedia] = useState(null);
+  const [refreshTrigger, setRefreshTrigger] = useState(false);
   // const [characterAppearance, setCharacterAppearance] = useState(null);
   // const [error, setError] = useState(null);
   const router = useRouter();
@@ -18,6 +30,9 @@ export default function CharacterInfo() {
   useEffect(() => {
     const fetchCharacterData = async () => {
       try {
+        const { errors, data: characters2 } =
+          await client.models.Character.list();
+        console.log("characters: ", characters2);
         const response = await fetch("/api/character-data");
         const data = await response.json();
         const {
@@ -38,7 +53,42 @@ export default function CharacterInfo() {
     };
 
     fetchCharacterData();
-  }, []);
+  }, [refreshTrigger]);
+
+  const onAddCharacter = async (event) => {
+    event.preventDefault();
+    const characterName = event.target.characterName.value.trim();
+    if (!characterName) {
+      console.log("character name cannot be empty");
+      return;
+    }
+
+    try {
+      // Create the new character
+      const { errors, data: newCharacter } =
+        await client.models.Character.create({
+          name: characterName,
+        });
+
+      if (errors) {
+        console.error("error making character: ", errors);
+        return;
+      }
+
+      console.log("character made: ", newCharacter);
+
+      // Add the new character to the state directly
+      setCharacterEquipment((prev) => [
+        ...prev,
+        { name: newCharacter.name, data: {} }, // Adjust structure to match your state
+      ]);
+
+      // Optionally refetch all data from server (if required)
+      setRefreshTrigger(!refreshTrigger);
+    } catch (err) {
+      console.log("error: ", err);
+    }
+  };
 
   if (loading) return <div>Loading...</div>;
   if (!loading) {
@@ -46,21 +96,21 @@ export default function CharacterInfo() {
       <div className="relative">
         <div className="fixed top-0 left-0 w-full h-full bg-darkshire bg-cover -z-10"></div>
         <button
-          className="px-3 py-2 mt4 ml-4 border absolute rounded-sm mt-2"
+          className="px-3 py-2 mt4 ml-4 border  rounded-sm mt-2"
           onClick={() => router.push("/")}
         >
           home
         </button>
-
+        <form onSubmit={onAddCharacter} className="flex p-4 space-x-2">
+          <input
+            placeholder="add your character!"
+            type="text"
+            name="characterName"
+            className="p-1 text-black"
+          />
+          <button className="px-2 py-1 border">click</button>
+        </form>
         <div className="p-14 grid lg:grid-cols-4 gap-10">
-          {/* <div className="flex p-4 space-x-2">
-            <input
-              placeholder="add your character!"
-              type="text"
-              className="p-1"
-            />
-            <button className="px-2 py-1 border">click</button>
-          </div> */}
           {characterEquipment.map((character, index) => {
             const stats = characterStats[index];
             const profile = characterProfile[index];
@@ -79,7 +129,7 @@ export default function CharacterInfo() {
                   className="self-center bg-red-500 border border-gray-300 rounded-sm mb-4 "
                 />
                 <h1 className="text-orange-400 self-center text-lg">
-                  {character.character.toString().toUpperCase()}
+                  {character.character?.toString().toUpperCase()}
                 </h1>
                 <br></br>
 
