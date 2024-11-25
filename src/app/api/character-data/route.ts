@@ -46,7 +46,7 @@ export async function GET() {
   //   "doorknob",
   // ];
 
-  const { errors, data: characters } = await client.models.Character.list();
+  const { data: characters } = await client.models.Character.list();
   const characterNames = characters.map((character) => character.name);
   console.log("character names: ", characterNames);
   console.log("characters: ", characters);

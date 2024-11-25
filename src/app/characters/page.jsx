@@ -30,8 +30,7 @@ export default function CharacterInfo() {
   useEffect(() => {
     const fetchCharacterData = async () => {
       try {
-        const { errors, data: characters2 } =
-          await client.models.Character.list();
+        const { data: characters2 } = await client.models.Character.list();
         console.log("characters: ", characters2);
         const response = await fetch("/api/character-data");
         const data = await response.json();
