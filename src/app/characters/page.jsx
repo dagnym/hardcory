@@ -21,6 +21,7 @@ export default function CharacterInfo() {
   const [characterProfile, setCharacterProfile] = useState(null);
   const [characterMedia, setCharacterMedia] = useState(null);
   const [refreshTrigger, setRefreshTrigger] = useState(false);
+  const [characters, setCharacters] = useState([]);
   // const [characterAppearance, setCharacterAppearance] = useState(null);
   // const [error, setError] = useState(null);
   const router = useRouter();
@@ -31,6 +32,7 @@ export default function CharacterInfo() {
     const fetchCharacterData = async () => {
       try {
         const { data: characters2 } = await client.models.Character.list();
+        setCharacters(characters2);
         console.log("characters: ", characters2);
         const response = await fetch("/api/character-data");
         const data = await response.json();
@@ -89,6 +91,14 @@ export default function CharacterInfo() {
     }
   };
 
+  const onDeleteCharacter = async (characterId) => {
+    console.log("character id: ", characterId);
+    const { data: deletedCharacter } = await client.models.Character.delete(
+      characterId
+    );
+    console.log("result: ", deletedCharacter);
+  };
+
   if (loading) return <div>Loading...</div>;
   if (!loading) {
     return (
@@ -110,13 +120,14 @@ export default function CharacterInfo() {
           <button className="px-2 py-1 border">click</button>
         </form>
         <div className="p-14 grid lg:grid-cols-4 gap-10">
-          {characterEquipment.map((character, index) => {
+          {characters.map((character, index) => {
             const stats = characterStats[index];
             const profile = characterProfile[index];
             const media = characterMedia[index];
+            const equipment = characterEquipment[index];
             return (
               <div
-                key={character.name || `character-${index}`}
+                key={character.id || `character-${index}`}
                 className="border p-10 rounded-md bg-black bg-opacity-85 flex flex-col"
               >
                 <Image
@@ -128,12 +139,12 @@ export default function CharacterInfo() {
                   className="self-center bg-red-500 border border-gray-300 rounded-sm mb-4 "
                 />
                 <h1 className="text-orange-400 self-center text-lg">
-                  {character.character?.toString().toUpperCase()}
+                  {character.name?.toString().toUpperCase()}
                 </h1>
                 <br></br>
 
                 <ul className="flex flex-col items-center">
-                  {character?.data?.equipped_items?.map((item) => {
+                  {equipment?.data?.equipped_items?.map((item) => {
                     return (
                       <p className="text-green-500" key={item.slot.type}>
                         {item.name}{" "}
@@ -159,6 +170,12 @@ export default function CharacterInfo() {
                 <pre className="text-red-400">
                   {JSON.stringify(stats?.data?.health, null, 2)}
                 </pre>
+                <button
+                  onClick={() => onDeleteCharacter(character)}
+                  className="p-2 border mt-2"
+                >
+                  delete
+                </button>
               </div>
             );
           })}
